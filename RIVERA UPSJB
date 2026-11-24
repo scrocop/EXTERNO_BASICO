@@ -1,0 +1,15 @@
+library(pacman)
+p_load(epitools,readxl,gtsummary,ggplot2,dplyr,tidyr) #PAQUETES UTILIZADOS
+
+datos <- read_excel("Downloads/REGISTRO DE PARTICIPANTES (17.10).xlsx") #CARGA DE INFORMACION
+
+shapiro.test(datos$FB_Puntaje_Total) #PRUEBAS DE NORMALIDAD #(NO INCLUYE SOLO SHAPIRO)
+shapiro.test(datos$HPLP_Puntaje_Total) #(NO INCLUYE SOLO SHAPIRO)
+
+cor.test(datos$FB_Puntaje_Total, datos$HPLP_Puntaje_Total,
+method = "spearman",
+exact = FALSE) #CORRELACION SPEARMAN
+
+tbl_summary(datos, by=FB_Nivel_Riesgo, missing="no") %>% add_p() %>% add_overall() #CHI CUADRADO Y TEST DE FISHER
+
+tbl_summary(datos, missing="no") #DESCRIPTIVO (SE CORRIGIERON LOS % MANUALMENTE)
